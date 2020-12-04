@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Main Page</title>
+</head>
+<body>
+<h1> [USER LIST] </h1>
+<br>
+
+<table>
+    <thread>
+        <tr>
+            <td>Id</td>
+            <td>Name</td>
+            <td>Password</td>
+        </tr>
+    </thread>
+    <tbody>
+        <tr th:each="user : ${userList}">
+            <td th:text="${user.id}"> UserID </td>
+            <td th:text="${user.username}"> Username</td>
+            <td th:text="${user.password}"> Password </td>
+            <td> <a th:href="@{/update/{id}(id=${user.id})}"> Update </a> </td>
+            <td> <a th:href="@{/delete/{id}(id=${user.id})}"> Delete </a> </td>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
