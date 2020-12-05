@@ -8,10 +8,10 @@
 
 <form action="#" th:action="@{/addUser}" th:object="${user}" method="POST">
 
-    <h1 th:text="Username"> Username </h1>
+    <h1 th:text="#{name}"> Username </h1>
     <input th:type="text" th:field="*{username}">
 
-    <h1 th:text="Password"> Password </h1>
+    <h1 th:text="#{pass}"> Password </h1>
     <input th:type="text" th:field="*{password}">
 
     <button type="submit"> Submit </button>

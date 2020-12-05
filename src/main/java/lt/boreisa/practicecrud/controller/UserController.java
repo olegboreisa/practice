@@ -6,6 +6,7 @@ import lt.boreisa.practicecrud.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,6 +47,12 @@ public class UserController {
      * If not present in the model, the argument will be instantiated first and then added to the model
      *
      * https://stackoverflow.com/questions/23576213/what-is-the-difference-between-modelattribute-model-addattribute-in-spring
+     *
+     * [BindingResult] is Spring’s object that holds the result of the validation and binding and
+     * contains errors that may have occurred. The BindingResult must come right after the model object
+     * that is validated or else Spring will fail to validate the object and throw an exception.
+     *
+     * https://stackoverflow.com/questions/10413886/what-is-the-use-of-bindingresult-interface-in-spring-mvc/10427459
      */
 
     @RequestMapping(path = "/getUserForm", method = RequestMethod.GET)
@@ -54,10 +61,14 @@ public class UserController {
     }
 
     @RequestMapping(path = "/addUser", method = RequestMethod.POST)
-    private String addUser(@Valid @ModelAttribute User user) {
-        log.info("user{}", user);
+    private String addUser(@Valid @ModelAttribute User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            log.info("user{}", user);
+            return "user/add-user";
+        }
+
         userRepo.save(user);
-        return "user/main-user";
+        return "redirect:/";
     }
 
     // ---------------------------------------------------
@@ -82,9 +93,13 @@ public class UserController {
     }
 
     @RequestMapping(path = "/updateUser", method = RequestMethod.POST)
-    private String updateUser (@ModelAttribute User user) {
+    private String updateUser (@Valid @ModelAttribute User user, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+            log.info("user {}", user);
+            return "user/list-user";
+        }
         userRepo.save(user);
-        return "user/main-user";
+        return "redirect:/";
     }
 
     // ---------------------------------------------------

@@ -5,10 +5,17 @@
 </head>
 <body>
 <h1> [MAIN PAGE] </h1>
+<h1 th:text="#{greeting}"> Greets </h1>
 <br>
 
-<a th:href="@{/getUserForm}"> ADD USER</a>
-<a th:href="@{/getUserList}"> USER LIST </a>
+<a th:href="@{/getUserForm}" th:text="#{add.user}">Add User</a>
+<a th:href="@{/getUserList}" th:text="#{see.user.list}">User List </a>
+
+<br>
+
+<span th:text="#{lang.change}"></span><br>
+<button type="button" th:text="#{lang.eng}" onclick="window.location.href='http://localhost:8080/?lang=en'"></button>
+<button type="button" th:text="#{lang.lt}" onclick="window.location.href='http://localhost:8080/?lang=lt'"></button>
 
 </body>
 </html>
